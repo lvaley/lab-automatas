@@ -1,0 +1,219 @@
+:root {
+  /* Solo 2 colores de resalte (títulos y símbolos); el resto son neutros */
+  --accent-title: #24407a;
+  --accent-symbol: #c62828;
+
+  --ink: #1f2430;
+  --muted: #6b7280;
+  --line: #d5d9e0;
+  --head: #eef0f4;
+
+  --bs-body-font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;
+  --bs-body-color: var(--ink);
+  --bs-body-bg: #fff;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* sin scroll en la pantalla principal */
+}
+
+/* ---------- Estructura de una sola vista ---------- */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  padding: 0 clamp(0.75rem, 2vw, 2rem);
+}
+
+.app-header {
+  flex: 0 0 auto;
+  text-align: center;
+  padding: 0.9rem 0 0.6rem;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: clamp(1.3rem, 3.2vh, 1.9rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--accent-title);
+}
+
+.app-header p {
+  margin: 0.1rem 0 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.app-main {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 0.75rem;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  width: min(100%, 1000px);
+  min-height: 0;
+}
+
+.tables-row {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  gap: clamp(0.75rem, 2vw, 2rem);
+  padding-top: 1rem;
+}
+
+.tables-row .panel {
+  min-width: 0;
+}
+
+.panel-vectors {
+  flex: 0.8 1 0;
+}
+
+.panel-matrix {
+  flex: 1.35 1 0;
+}
+
+/* ---------- Paneles ---------- */
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.panel-fixed {
+  flex: 0 0 auto;
+}
+
+.panel-grow {
+  flex: 1 1 0;
+}
+
+.panel-title {
+  margin: 0 0 0.5rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--accent-title);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--accent-title);
+}
+
+.panel-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  container-type: size;
+}
+
+.panel-fixed .panel-body {
+  container-type: normal;
+}
+
+/* ---------- Carga de archivo ---------- */
+.dropzone {
+  height: 3.4rem;
+  border: 1px dashed var(--muted);
+  border-radius: 0.35rem;
+  color: var(--muted);
+  cursor: default;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.dropzone.is-dragging {
+  border-color: var(--accent-title);
+  color: var(--accent-title);
+  outline: none;
+}
+
+.status-line {
+  height: 1.4rem;
+  padding-top: 0.25rem;
+  font-size: 0.8rem;
+  line-height: 1.1rem;
+  color: var(--accent-symbol);
+  visibility: hidden;
+}
+
+.status-line.is-visible {
+  visibility: visible;
+}
+
+/* ---------- Despliegue del archivo ---------- */
+.file-display {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  line-height: 1.55;
+  word-break: break-word;
+  text-align: center;
+}
+
+.file-line strong {
+  margin-right: 0.15rem;
+}
+
+/* ---------- Tablas: las filas se ajustan a la altura disponible ---------- */
+.vector-table,
+.matrix-table {
+  --row-h: calc(100cqh / var(--rows));
+  --bs-table-bg: transparent;
+  width: 100%;
+  font-size: clamp(0.6rem, calc(var(--row-h) * 0.42), 1.05rem);
+  text-align: center;
+  table-layout: fixed;
+  border-color: var(--line);
+}
+
+.vector-table th,
+.vector-table td,
+.matrix-table th,
+.matrix-table td {
+  padding-block: calc(var(--row-h) * 0.16);
+  vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vector-table thead th,
+.matrix-table thead th {
+  background: var(--head);
+  color: var(--accent-title);
+  font-weight: 500;
+}
+
+.matrix-table tbody th {
+  font-weight: 700;
+}
+
+/* ---------- Pie de página ---------- */
+.app-footer {
+  flex: 0 0 auto;
+  padding: 0.55rem 0 0.65rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+/* ---------- Pantallas angostas: tablas una sobre otra ---------- */
+@media (max-width: 575.98px) {
+  .tables-row {
+    flex-direction: column;
+  }
+
+  .panel-vectors,
+  .panel-matrix {
+    flex: 1 1 0;
+  }
+}
