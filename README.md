@@ -1,19 +1,10 @@
-# Laboratorio · Autómata finito
+# Laboratorio · Autómatas y Lenguajes Formales
 
-Aplicación en **React 19 + Vite**, con **ESLint** y **Bootstrap 5**. Carga por arrastre un archivo TXT con la definición de un autómata y despliega el archivo, los vectores (Q, Σ, A) y la matriz de transición, todo en una sola vista sin scroll.
+Aplicación en **React 19 + Vite**, con **ESLint** y **Bootstrap 5**. Carga por arrastre un archivo .txt con la definición de un autómata y despliega el archivo, los vectores (Q, Σ, A) y la matriz de transición, todo en una sola vista sin scroll.
 
-## Ejecución
+## Formato del archivo .txt
 
-```bash
-npm install
-npm run dev      # servidor de desarrollo
-npm run lint     # revisión con ESLint
-npm run build    # compilación de producción
 ```
-
-## Formato del archivo TXT
-
-```txt
 Q:{A1,B}
 Z:{a,b1}
 i:A1
@@ -59,7 +50,7 @@ Después, actualizar el mensaje de la línea 56, el comentario de la línea 6 y 
 
 ## Dónde se muestran los datos
 
-Los nombres internos (`states`, `alphabet`, `accepting`, `matrix`) los consumen estos componentes, por lo que no hace falta tocarlos si solo se cambian las letras del TXT.
+Los nombres internos (`states`, `alphabet`, `accepting`, `matrix`) los consumen estos componentes, por lo que no hace falta tocarlos si solo se cambian las letras del .txt
 
 | Archivo | Qué muestra |
 |---------|-------------|
