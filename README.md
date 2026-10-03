@@ -26,7 +26,7 @@ Las letras del archivo se leen en un único lugar: **`src/utils/parseAutomaton.j
 
 | Qué cambiar | Línea | Código |
 |-------------|-------|--------|
-| Letras que se reconocen en el TXT | 33 | `/^([QZiAW])\s*:\s*(.*)$/i` |
+| Letras que se reconocen en el .txt | 33 | `/^([QZiAW])\s*:\s*(.*)$/i` |
 | Lista para detectar líneas faltantes | 37 | `['Q', 'Z', 'i', 'A', 'W']` |
 | Estados (Q) | 42 | `parseSet(raw.Q)` |
 | Alfabeto (Z) | 43 | `parseSet(raw.Z)` |
