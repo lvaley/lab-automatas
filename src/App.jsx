@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import DropZone from './components/DropZone.jsx'
 import FileDisplay from './components/FileDisplay.jsx'
 import VectorsPanel from './components/VectorsPanel.jsx'
@@ -19,6 +19,7 @@ export default function App() {
   const [fileName, setFileName] = useState(null)
   const [automaton, setAutomaton] = useState(null)
   const [error, setError] = useState(null)
+  const loadId = useRef(0)
 
   // Evita que el navegador abra el archivo si se suelta fuera de la zona de carga
   useEffect(() => {
@@ -31,7 +32,16 @@ export default function App() {
     }
   }, [])
 
+  // Vuelve a la pantalla inicial, sin archivo cargado
+  const handleClear = () => {
+    loadId.current += 1 // descarta una lectura que aún esté en curso
+    setFileName(null)
+    setAutomaton(null)
+    setError(null)
+  }
+
   const handleFile = async (file) => {
+    const id = ++loadId.current
     setFileName(file.name)
 
     if (!/\.txt$/i.test(file.name) && file.type !== 'text/plain') {
@@ -42,9 +52,11 @@ export default function App() {
 
     try {
       const text = await file.text()
+      if (id !== loadId.current) return
       setAutomaton(parseAutomaton(text))
       setError(null)
     } catch (err) {
+      if (id !== loadId.current) return
       setAutomaton(null)
       setError(err.message)
     }
@@ -64,7 +76,7 @@ export default function App() {
       <main className="app-main">
         <div className="stack">
           <Section title="Cargar archivo .txt" className="panel-fixed">
-            <DropZone onFile={handleFile} fileName={fileName} />
+            <DropZone onFile={handleFile} onClear={handleClear} fileName={fileName} />
             <div
               className={`status-line text-truncate ${status ? 'is-visible' : ''}`}
               role="status"

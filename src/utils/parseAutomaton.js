@@ -3,7 +3,7 @@
  *
  * Formato esperado:
  *   Q:{A1,B}
- *   Z:{a,b1}
+ *   S:{a,b1}
  *   i:A
  *   A:{B}
  *   W:{(A1,B,a);(A1,A1,b1);(B,B,a);(B,A1,b)}
@@ -30,17 +30,17 @@ export function parseAutomaton(text) {
 
   const raw = {}
   for (const line of lines) {
-    const match = line.match(/^([QZiAW])\s*:\s*(.*)$/i)
+    const match = line.match(/^([QSiAW])\s*:\s*(.*)$/i)
     if (match) raw[match[1].toUpperCase() === 'I' ? 'i' : match[1].toUpperCase()] = match[2]
   }
 
-  const missing = ['Q', 'Z', 'i', 'A', 'W'].filter((key) => raw[key] === undefined)
+  const missing = ['Q', 'S', 'i', 'A', 'W'].filter((key) => raw[key] === undefined)
   if (missing.length > 0) {
     throw new Error(`Faltan las líneas: ${missing.join(', ')}`)
   }
 
   const states = parseSet(raw.Q)
-  const alphabet = parseSet(raw.Z)
+  const alphabet = parseSet(raw.S)
   const initial = raw.i.trim()
   const accepting = parseSet(raw.A)
 
@@ -53,7 +53,7 @@ export function parseAutomaton(text) {
   }
 
   if (states.length === 0) throw new Error('El conjunto de estados (Q) está vacío')
-  if (alphabet.length === 0) throw new Error('El alfabeto (Z) está vacío')
+  if (alphabet.length === 0) throw new Error('El alfabeto (S) está vacío')
   if (transitions.length === 0) throw new Error('No se encontraron transiciones en W')
 
   const warnings = []
